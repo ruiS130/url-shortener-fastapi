@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import List
 
 from pydantic import BaseModel, AnyHttpUrl
 
@@ -27,10 +26,7 @@ class URLRedirect(BaseModel):
 
 
 class URLStats(BaseModel):
-    """
-    Basic per-URL stats.
-    You can extend this later with more analytics fields (e.g. last_accessed_at, user_id, etc.).
-    """
+    """Basic per-URL stats."""
 
     short_code: str
     total_clicks: int
@@ -38,10 +34,7 @@ class URLStats(BaseModel):
 
 
 class URLListResponse(BaseModel):
-    """
-    Simple wrapper to experiment with pagination and filtering later.
-    """
+    """Response wrapper for URL list endpoints."""
 
-    items: List[URLInfo]
+    items: list[URLInfo]
     total: int
-
