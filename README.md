@@ -103,11 +103,13 @@ These implementations are intentionally simple and not production-ready; they ar
 
    - Copy the returned `short_code` and hit `GET /{short_code}` to verify the redirect behavior.
 
-### Next ideas / extensions
+### What else is already sketched
 
-- Improve short-code generation (hashing, random tokens, collision handling).
-- Add expiration times, custom aliases, and per-user namespaces.
-- Add authentication and rate limiting.
-- Instrument the app for metrics (Prometheus, OpenTelemetry).
-- Run load tests (e.g. with k6, Locust, or vegeta) and compare different configurations or deployments.
+The live routes are still the minimal pair (`POST /shorten`, `GET /{short_code}`). In `app/schemas.py` there are extra Pydantic models—stats, list wrappers, theme-ish settings, fun facts—that are not wired to HTTP handlers yet; they are placeholders for responses you can add when you grow the API.
+
+### Next steps
+
+1. **Expose the richer responses** — Add routes (and DB fields if needed) that return shapes like `URLListResponse` and `URLStats`, and optionally use `label` / `notes` from `URLCreate` once the `URL` model stores them.
+2. **Treat the database seriously** — Switch from one-off `create_all` to Alembic migrations, and tighten short-code generation (collision handling, length, character set).
+3. **Guardrails and experiments** — Add rate limiting (and auth if you want multi-tenant links), then run load tests (k6, Locust, vegeta) and iterate on pooling, indexes, and deployment layout.
 
